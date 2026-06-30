@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT 23 // TERMINAL</title>
+    <style>
+        /* Стиль в духе Цикады / Терминала */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .terminal-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .manifest {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Поле ввода */
+        .code-input {
+            background-color: #000000;
+            border: none;
+            border-bottom: 2px solid #ffffff;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            padding: 5px;
+            text-align: center;
+            width: 250px;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        /* Эффект мигания нижнего подчеркивания при фокусе */
+        .code-input:focus {
+            border-bottom: 2px solid #00ff00; /* Становится зеленым при вводе, можно оставить белым */
+        }
+
+        /* Кнопка отправки */
+        .submit-btn {
+            background-color: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Сообщения об ошибках или успехе */
+        #output-message {
+            margin-top: 25px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        
+        .error { color: #ff3333; }
+        .success { color: #00ff00; }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-container">
+        <!-- Текст на главной, можно убрать или заменить -->
+        <div class="manifest">
+            PROJECT_23 // СИСТЕМА ВЕРИФИКАЦИИ КАНДИДАТОВ.<br>
+            ВВЕДИТЕ ПОЛУЧЕННЫЙ ИДЕНТИФИКАТОР ДЛЯ ПОДКЛЮЧЕНИЯ К СЕТИ.
+        </div>
+
+        <!-- Форма ввода -->
+        <form id="gatekeeper-form" onsubmit="validateCode(event)">
+            <input type="text" id="candidate-code" class="code-input" placeholder="[ ENTER CODE ]" autocomplete="off" required>
+            <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
+        </form>
+
+        <!-- Сюда будет выводиться результат -->
+        <div id="output-message"></div>
+    </div>
+
+    <script>
+        function validateCode(event) {
+            event.preventDefault(); // Запрещаем перезагрузку страницы
+            
+            const inputField = document.getElementById('candidate-code');
+            const messageDiv = document.getElementById('output-message');
+            const userCode = inputField.value.trim();
+
+            // ВАШ ПРАВИЛЬНЫЙ КОД (замените '2301' на то, что загадали)
+            const correctCode = '2301'; 
+
+            // Стираем прошлые сообщения
+            messageDiv.innerHTML = '';
+            messageDiv.className = '';
+
+            if (userCode === correctCode) {
+                messageDiv.className = 'success';
+                // Текст, который увидят игроки при правильном вводе
+                messageDiv.innerHTML = `
+                    СВЯЗЬ УСТАНОВЛЕНА... <br><br>
+                    Координатор верифицирован. Отправьте хэш-код испытания на адрес управления: <br>
+                    <strong>project23@gmail.com</strong>
+                `;
+                inputField.disabled = true; // Блокируем поле после успеха
+            } else {
+                messageDiv.className = 'error';
+                messageDiv.innerText = 'ОШИБКА ДАННЫХ. ДОСТУП ЗАПРЕЩЕН.';
+                
+                // Эффект дрожания или просто очистка поля через секунду
+                setTimeout(() => {
+                    inputField.value = '';
+                }, 1000);
+            }
+        }
+    </script>
+
+</body>
+</html>
