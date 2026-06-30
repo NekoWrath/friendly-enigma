@@ -101,6 +101,21 @@
     </div>
 
     <script>
+        
+        // Блокируем правую кнопку мыши
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+}, false);
+
+// Блокируем горячие клавиши разработчика
+document.addEventListener("keydown", (e) => {
+    // Блокируем F12, Ctrl+U, Ctrl+Shift+I
+    if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
+        e.stopPropagation();
+        e.preventDefault();
+        alert("ОШИБКА ДОСТУПА. СИСТЕМА НАБЛЮДАЕТ ЗА ВАМИ.");
+    }
+});
         function validateCode(event) {
             event.preventDefault(); // Запрещаем перезагрузку страницы
             
